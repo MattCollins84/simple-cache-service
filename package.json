@@ -1,0 +1,32 @@
+{
+  "name": "simple-cache-service",
+  "version": "0.0.1",
+  "description": "Simple Caching Service",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattCollins84/simple-cache-service.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/MattCollins84/simple-cache-service/issues"
+  },
+  "homepage": "https://github.com/MattCollins84/simple-cache-service#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cf-deployment-tracker-client": "^0.1.1",
+    "cfenv": "^1.0.3",
+    "compression": "^1.6.2",
+    "cors": "^2.7.1",
+    "express": "^4.14.0",
+    "passport": "^0.3.2",
+    "passport-anonymous": "^1.0.1",
+    "passport-http": "^0.3.0",
+    "redis": "^2.6.2",
+    "underscore": "^1.8.3"
+  }
+}
