@@ -12,7 +12,7 @@ const express = require('express'),
       sos = require('./lib/sos.js')();
 
 // register with SOS
-sos.register("cds", "s-c-s", { url: appEnv.url, name: "Simple Caching Service" }, { ttl: 10 });
+sos.register("search", "s-c-s", { url: appEnv.url, name: "Simple Caching Service" }, { ttl: 10 });
 
 // App Globals
 app.locals = {
