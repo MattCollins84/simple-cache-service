@@ -8,11 +8,7 @@ const express = require('express'),
       compression = require('compression'),
       missing = require('./lib/utility.js').missing,
       _ = require('underscore'),
-      handleRes = require('./lib/utility.js').handleRes,
-      sos = require('./lib/sos.js')();
-
-// register with SOS
-sos.register("search", "s-c-s", { url: appEnv.url, name: "Simple Caching Service" }, { ttl: 10 });
+      handleRes = require('./lib/utility.js').handleRes;
 
 // App Globals
 app.locals = {
@@ -21,6 +17,12 @@ app.locals = {
     type: ( (credentials && credentials.public_hostname) ? "redis" : "inmemory" ),
     credentials: credentials || {}
   }
+}
+
+if (process.env.ETCD_URL) {
+  // register with SOS
+  var sos = require('./lib/sos.js')();
+  sos.register("search", "s-c-s", { url: appEnv.url, name: "Simple Caching Service" }, { ttl: 10 });
 }
 
 // set our cache
@@ -54,8 +56,6 @@ app.get('/', isloggedin.auth, function (req, res) {
 
 // set key value
 app.post('/key/:key', isloggedin.auth, bodyParser, function(req, res) {
-
-  console.log(req.body);
 
   var errors = missing(req.body, ["value"], false);
 

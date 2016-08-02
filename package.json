@@ -4,7 +4,8 @@
   "description": "Simple Caching Service",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "passport-anonymous": "^1.0.1",
     "passport-http": "^0.3.0",
     "redis": "^2.6.2",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "simple-orchestration-js": "https://github.com/mattcollins84/simple-orchestration-js"
   }
 }
