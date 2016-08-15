@@ -22,7 +22,13 @@ app.locals = {
 if (process.env.ETCD_URL) {
   // register with SOS
   var sos = require('./lib/sos.js')();
-  sos.register("search", "s-c-s", { url: appEnv.url, name: "Simple Caching Service" }, { ttl: 10 });
+  sos.register("search", "s-c-s", { 
+    url: appEnv.url, 
+    name: "Simple Caching Service",
+    username: ((process.env.LOCKDOWN && process.env.SCS_LOCKDOWN_USERNAME) ? process.env.SCS_LOCKDOWN_USERNAME : null),
+    password: ((process.env.LOCKDOWN && process.env.SCS_LOCKDOWN_PASSWORD) ? process.env.SCS_LOCKDOWN_PASSWORD : null) 
+  }, 
+  { ttl: 10 });
 }
 
 // set our cache
