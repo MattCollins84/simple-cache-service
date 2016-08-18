@@ -29,6 +29,6 @@
     "passport-http": "^0.3.0",
     "redis": "^2.6.2",
     "underscore": "^1.8.3",
-    "simple-orchestration-js": "https://github.com/mattcollins84/simple-orchestration-js"
+    "simple-service-registry": "0.1.1"
   }
 }

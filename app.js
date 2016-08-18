@@ -21,8 +21,8 @@ app.locals = {
 
 if (process.env.ETCD_URL) {
   // register with SOS
-  var sos = require('./lib/sos.js')();
-  sos.register("search", "s-c-s", { 
+  var sos = require('./lib/registry.js')();
+  sos.register("search", "cache-service", { 
     url: appEnv.url, 
     name: "Simple Caching Service",
     username: ((process.env.LOCKDOWN && process.env.SCS_LOCKDOWN_USERNAME) ? process.env.SCS_LOCKDOWN_USERNAME : null),

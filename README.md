@@ -81,19 +81,19 @@ To delete all keys, make a request to `POST /clearall`
 curl -x POST http://cache.example.com/clearall
 ```
 
-## Discovery Mode
+## Service Registry
 
-Discovery Mode allows the Simple Cache Service to be utilised by the [Simple Search Service](https://github.com/ibm-cds-labs/simple-search-service) to implement caching of searches. This is achieved by using the [Simple Orchestration](https://github.com/mattcollins84/simple-orchestration-js) module.
+The Service Registry allows the Simple Cache Service to be utilised by the [Simple Search Service](https://github.com/ibm-cds-labs/simple-search-service) to implement caching of searches. This is achieved by using the [Simple Service Registry](https://github.com/mattcollins84/simple-service-registry) module.
 
-### Enabling discovery mode
+### Enabling the Service Registry
 
-Enabling discovery mode requires setting an environment variable, `ETCD_URL`. This should be the URL of your Etcd instance including any basic HTTP authentication information
+Enabling the Service Registry mode requires setting an environment variable, `ETCD_URL`. This should be the URL of your Etcd instance including any basic HTTP authentication information
 
 ```
 export ETCD_URL='http://username:password@etcd.exmple.com'
 ```
 
-If Discovery Mode is enabled, the Simple Cache Service will become discoverable by the Simple Search Service.
+If the Service Registry is enabled, the Simple Cache Service will become discoverable by the Simple Search Service.
 
 ## Contributing
 
