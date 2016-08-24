@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Cache stats</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+      socket.on('update', function(data) {
+        $('#numkeys').text(data.keys)
+        $('#memusage').text(data.memory)
+        $('#memh').show()
+        if (!data.memory) {
+          $('#memh').hide()
+        }
+      })
+    </script>
+
+  </head>
+
+  <body>
+
+    <div class="container" id="app">
+      
+      <h1>Stats</h1>
+
+      <h2><span id="numkeys">0</span> Keys in cache</h2>
+      <h2 id="memh"><span id="memusage">0k</span> of memory used</h2>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
