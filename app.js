@@ -8,7 +8,12 @@ const express = require('express'),
       compression = require('compression'),
       missing = require('./lib/utility.js').missing,
       _ = require('underscore'),
-      handleRes = require('./lib/utility.js').handleRes;
+      handleRes = require('./lib/utility.js').handleRes,
+      path = require('path');
+
+// socket.io and express config
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 // App Globals
 app.locals = {
@@ -45,13 +50,30 @@ const bodyParser = require('body-parser')({extended:true})
 app.use(compression());
 
 /*******
+  Stats
+  Getting cache stats for front-end
+*******/
+const getStats = function() {
+  app.get("cache").info(function(err, data) {
+    
+    if (!err && data) {
+      io.emit("update", data)
+    }
+
+  })
+}
+getStats();
+setInterval(getStats, 10000);
+io.on('connection', getStats)
+
+/*******
   UI
   Everything Below here is the HTML UI
 *******/
 
-// Homepage - list namespaces
+// Homepage
 app.get('/', isloggedin.auth, function (req, res) {
-  res.send({ success: true });
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
 });
 
 
@@ -73,6 +95,7 @@ app.post('/key/:key', isloggedin.auth, bodyParser, function(req, res) {
   }
 
   app.get("cache").put(req.params.key, req.body.value, function(err, data) {
+    getStats();
     return handleRes(err, data, req, res)
   })
 
@@ -92,6 +115,7 @@ app.get('/key/:key', isloggedin.auth, function(req, res) {
 app.delete('/key/:key', isloggedin.auth, function(req, res) {
 
   app.get("cache").remove(req.params.key, function(err, data) {
+    getStats();
     return handleRes(err, data, req, res)
   })
 
@@ -101,7 +125,7 @@ app.delete('/key/:key', isloggedin.auth, function(req, res) {
 app.post('/clearall', isloggedin.auth, function(req, res) {
 
   app.get("cache").clearAll();
-
+  getStats();
   return res.send({ success: true, data: {} })
 
 });
@@ -110,7 +134,7 @@ app.post('/clearall', isloggedin.auth, function(req, res) {
 app.use(express.static(__dirname + '/public'));
 
 // start server on the specified port and binding host
-app.listen(appEnv.port, appEnv.bind, function() {
+http.listen(appEnv.port, appEnv.bind, function() {
 
   // print a message when the server starts listening
   console.log("Server starting on " + appEnv.url);
