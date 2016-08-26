@@ -1,6 +1,6 @@
 {
   "name": "simple-cache-service",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Simple Caching Service",
   "main": "app.js",
   "scripts": {
