@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MattCollins84/simple-cache-service.git"
+    "url": "git+https://github.com/ibm-cds-labs/simple-cache-service.git"
   },
   "author": "",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/MattCollins84/simple-cache-service/issues"
+    "url": "https://github.com/ibm-cds-labs/simple-cache-service/issues"
   },
-  "homepage": "https://github.com/MattCollins84/simple-cache-service#readme",
+  "homepage": "https://github.com/ibm-cds-labs/simple-cache-service#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "cf-deployment-tracker-client": "^0.1.1",
