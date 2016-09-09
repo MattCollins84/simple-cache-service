@@ -134,7 +134,7 @@ app.post('/clearall', isloggedin.auth, function(req, res) {
 app.use(express.static(__dirname + '/public'));
 
 // start server on the specified port and binding host
-http.listen(appEnv.port, appEnv.bind, function() {
+http.listen(appEnv.port, "0.0.0.0", function() {
 
   // print a message when the server starts listening
   console.log("Server starting on " + appEnv.url);
