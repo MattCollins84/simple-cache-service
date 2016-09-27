@@ -34,6 +34,18 @@ If no Redis database is provided, then data will be cached in memory but this is
   ```
   $ cf create-service compose-for-redis Standard my-compose-for-redis-service
   ```
+  
+8. Push the app to Bluemix.
+
+  ```
+  $ cf push
+  ```
+
+9. Bind the service to the application.
+
+  ```
+  $ cf bind-service simple-cache-service my-compose-for-redis-service
+  ```
 
 ## Running the app locally
 
@@ -119,7 +131,24 @@ curl -x POST http://cache.example.com/clearall
 
 The Service Registry allows the Simple Cache Service to be utilised by the [Simple Search Service](https://github.com/ibm-cds-labs/simple-search-service) to implement caching of searches. This is achieved by using the [Simple Service Registry](https://github.com/mattcollins84/simple-service-registry) module.
 
-### Enabling the Service Registry
+## Enabling the Service Registry - Bluemix
+
+1. Create the Compose for Etcd service in Bluemix if you haven't already done so.
+
+  **Note :** The Compose for Etcd service does not offer a free plan. For details of pricing, see the _Pricing Plans_ section of the [Compose for Redis service][compose_for_redis_url] in Bluemix.
+
+  ```
+  $ cf create-service compose-for-etcd Standard my-compose-for-etcd-service
+  ```
+
+2. Bind the service to the application.
+
+  ```
+  $ cf bind-service simple-cache-service my-compose-for-etcd-service
+  $ cf restage simple-cache-service
+  ``` 
+
+### Enabling the Service Registry - Local Etcd
 
 Enabling the Service Registry mode requires setting an environment variable, `ETCD_URL`. This should be the URL of your Etcd instance including any basic HTTP authentication information
 
@@ -132,3 +161,7 @@ If the Service Registry is enabled, the Simple Cache Service will become discove
 ## Contributing
 
 The projected is released under the Apache-2.0 license so forks, issues and pull requests are very welcome.
+
+[compose_for_etcd_url]: https://console.ng.bluemix.net/catalog/services/compose-for-etcd/
+[bluemix_signup_url]: https://ibm.biz/compose-for-etcd-signup
+[cloud_foundry_url]: https://github.com/cloudfoundry/cli
