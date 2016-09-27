@@ -3,7 +3,7 @@ const express = require('express'),
       cors = require('cors'),
       cfenv = require('cfenv'),
       appEnv = cfenv.getAppEnv(),
-      credentials = require('./lib/credentials.js').getCredentials(/Redis by Compose/),
+      credentials = require('./lib/credentials.js').getCredentials(/compose-for-redis/),
       isloggedin = require('./lib/isloggedin.js'),
       compression = require('compression'),
       missing = require('./lib/utility.js').missing,
@@ -19,7 +19,7 @@ var io = require('socket.io')(http);
 app.locals = {
   discovery: ( process.env.ETCD_URL ? true : false ),
   cache: {
-    type: ( (credentials && credentials.public_hostname) ? "redis" : "inmemory" ),
+    type: (credentials ? "redis" : "inmemory" ),
     credentials: credentials || {}
   }
 }
