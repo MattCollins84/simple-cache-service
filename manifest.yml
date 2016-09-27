@@ -1,0 +1,8 @@
+---
+applications:
+- name:    simple-cache-service
+  host:    simple-search-service-${random-word}
+  memory:  128M
+  domain: mybluemix.net
+  path: .
+  instances: 1

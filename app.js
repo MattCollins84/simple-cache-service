@@ -3,7 +3,8 @@ const express = require('express'),
       cors = require('cors'),
       cfenv = require('cfenv'),
       appEnv = cfenv.getAppEnv(),
-      credentials = require('./lib/credentials.js').getCredentials(/Redis by Compose/),
+      rediscredentials = require('./lib/credentials.js').getCredentials(/compose-for-redis/, 'REDIS_URL'),
+      etcdcredentials = require('./lib/credentials.js').getCredentials(/compose-for-etcd/, 'ETCD_URL'),
       isloggedin = require('./lib/isloggedin.js'),
       compression = require('compression'),
       missing = require('./lib/utility.js').missing,
@@ -15,18 +16,22 @@ const express = require('express'),
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+
 // App Globals
 app.locals = {
-  discovery: ( process.env.ETCD_URL ? true : false ),
+  discovery: {
+    active: etcdcredentials ? true : false, 
+    credentials: etcdcredentials
+  },
   cache: {
-    type: ( (credentials && credentials.public_hostname) ? "redis" : "inmemory" ),
-    credentials: credentials || {}
+    type: (rediscredentials ? "redis" : "inmemory" ),
+    credentials: rediscredentials || {}
   }
-}
+};
 
-if (process.env.ETCD_URL) {
+if (app.locals.discovery.active) {
   // register with SOS
-  var sos = require('./lib/registry.js')();
+  var sos = require('./lib/registry.js')(app.locals.discovery);
   sos.register("search", "cache-service", { 
     url: appEnv.url, 
     name: "Simple Caching Service",
@@ -134,7 +139,7 @@ app.post('/clearall', isloggedin.auth, function(req, res) {
 app.use(express.static(__dirname + '/public'));
 
 // start server on the specified port and binding host
-http.listen(appEnv.port, appEnv.bind, function() {
+http.listen(appEnv.port, "0.0.0.0", function() {
 
   // print a message when the server starts listening
   console.log("Server starting on " + appEnv.url);
